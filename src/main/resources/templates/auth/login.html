@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Login to Spring Shop to start shopping.">
+    <meta name="keywords" content="Spring Shop, login, online shopping">
+    <meta property="og:title" content="Login | Spring Shop">
+    <meta property="og:description" content="Login to access the best shopping experience.">
+    <title>Login | Spring Shop</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+</head>
+<body>
+<h2>Login</h2>
+
+<!-- Hiển thị thông báo nếu có -->
+<p th:if="${successMessage}" th:text="${successMessage}" style="color: green;"></p>
+<p th:if="${error}" th:text="${error}" style="color: red;"></p>
+
+<form th:action="@{/auth/login}" method="post">
+    <!-- Giữ lại tham số redirect từ URL -->
+    <input type="hidden" name="redirect" th:value="${param.redirect}" />
+
+    <label>Username:</label>
+    <input type="text" name="username" required>
+
+    <label>Password:</label>
+    <input type="password" name="password" required>
+
+    <button type="submit">Login</button>
+</form>
+
+<p>Don't have an account? <a href="/auth/register">Register</a></p>
+</body>
+</html>

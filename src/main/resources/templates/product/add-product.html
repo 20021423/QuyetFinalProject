@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Add a new product to Spring Shop.">
+    <meta name="keywords" content="Spring Shop, add product, manage store">
+    <meta property="og:title" content="Add Product | Spring Shop">
+    <meta property="og:description" content="Manage your store by adding new products.">
+    <title>Add Product | Spring Shop</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+</head>
+<body>
+<h2>Add New Product</h2>
+
+<form th:action="@{/products/add}" method="post">
+    <label>Product Name:</label>
+    <input type="text" name="name" required>
+
+    <label>Price:</label>
+    <input type="number" name="price" step="0.01" required>
+
+    <label>Image URL:</label>
+    <input type="text" name="imageUrl" required>
+
+    <button type="submit">Add Product</button>
+</form>
+
+<a href="/products">Back to Product List</a>
+</body>
+</html>

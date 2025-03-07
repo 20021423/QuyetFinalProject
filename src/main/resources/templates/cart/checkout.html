@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Checkout your shopping cart at Spring Shop.">
+    <meta name="keywords" content="Spring Shop, checkout, buy online, shopping cart">
+    <meta property="og:title" content="Checkout | Spring Shop">
+    <meta property="og:description" content="Review your cart and complete your purchase at Spring Shop.">
+    <meta property="og:image" content="https://yourwebsite.com/static/images/checkout-preview.jpg">
+    <meta property="og:url" content="https://yourwebsite.com/cart">
+    <meta name="twitter:card" content="summary_large_image">
+    <title>Checkout | Spring Shop</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+</head>
+<body>
+<h2>Checkout</h2>
+
+<!-- ✅ Hiển thị thông báo đặt hàng thành công -->
+<p th:if="${successMessage}" th:text="${successMessage}" style="color: green;"></p>
+
+<!-- ✅ Hiển thị sản phẩm trong giỏ hàng -->
+<div th:if="${not #lists.isEmpty(cartItems)}">
+    <table>
+        <thead>
+        <tr>
+            <th>Product</th>
+            <th>Quantity</th>
+            <th>Price</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="item : ${cartItems}">
+            <td th:text="${item.product.name}"></td>
+            <td th:text="${item.quantity}"></td>
+            <td th:text="${#numbers.formatDecimal(item.product.price * item.quantity, 0, 'COMMA', 3, 'POINT')} + 'đ'"></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<!-- ✅ Nếu giỏ hàng rỗng, hiển thị thông báo -->
+<div th:if="${#lists.isEmpty(cartItems)}">
+    <p>Your cart is empty.</p>
+</div>
+
+<!-- ✅ Nếu có sản phẩm, hiển thị nút "Check Out" -->
+<form th:if="${not #lists.isEmpty(cartItems)}" th:action="@{/cart/checkout}" method="post">
+    <button type="submit">Check Out</button>
+</form>
+
+<a href="/products">Continue Shopping</a>
+</body>
+</html>

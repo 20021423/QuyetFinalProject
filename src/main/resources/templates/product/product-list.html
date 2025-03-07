@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Browse and shop amazing products at Spring Shop.">
+    <meta name="keywords" content="Spring Shop, products, online shopping">
+    <meta property="og:title" content="Shop Products | Spring Shop">
+    <meta property="og:description" content="Find the best deals and add products to your cart.">
+    <meta property="og:image" content="https://yourwebsite.com/static/images/product-preview.jpg">
+    <meta property="og:url" content="https://yourwebsite.com/products">
+    <meta name="twitter:card" content="summary_large_image">
+    <title>Shop Products | Spring Shop</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+</head>
+<body>
+<h1>Welcome to Spring Shop. Let shopping!</h1>
+
+<!-- ✅ Hiển thị thông báo đăng nhập thành công -->
+<p th:if="${successMessage}" th:text="${successMessage}" style="color: green;"></p>
+
+<form th:action="@{/products/search}" method="get" class="search-bar">
+    <input type="text" name="name" placeholder="Search for products...">
+    <button type="submit">Search</button>
+    <a href="/cart" class="checkout-link">Check Out</a>
+</form>
+
+<div class="product-container">
+    <div class="product" th:each="product : ${products}">
+        <h3 th:text="${product.name}"></h3>
+        <p><span th:text="${#numbers.formatDecimal(product.price, 0, 'COMMA', 3, 'POINT')}"></span>đ</p>
+        <img th:src="${product.imageUrl}" alt="Product Image">
+        <form th:action="@{/cart/add}" method="post">
+            <input type="hidden" name="productId" th:value="${product.id}">
+            <input type="number" name="quantity" min="1" value="1">
+            <button type="submit">Add to cart</button>
+        </form>
+    </div>
+</div>
+</body>
+</html>

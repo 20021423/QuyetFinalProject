@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Create a new account on Spring Shop.">
+  <meta name="keywords" content="Spring Shop, register, sign up">
+  <meta property="og:title" content="Register | Spring Shop">
+  <meta property="og:description" content="Join Spring Shop and start shopping today!">
+  <title>Register | Spring Shop</title>
+  <link rel="stylesheet" th:href="@{/css/styles.css}">
+</head>
+<body>
+<h2>Register</h2>
+<form th:action="@{/auth/register}" method="post">
+  <label>Full Name:</label>
+  <input type="text" name="fullName" required>
+
+  <label>Username:</label>
+  <input type="text" name="username" required>
+
+  <label>Email:</label>
+  <input type="email" name="email" required>
+
+  <label>Phone Number:</label>
+  <input type="text" name="phoneNumber" required>
+
+  <label>Password:</label>
+  <input type="password" name="password" required>
+
+  <button type="submit">Register</button>
+</form>
+
+<p>Already have an account? <a href="/auth/login">Login</a></p>
+</body>
+</html>
