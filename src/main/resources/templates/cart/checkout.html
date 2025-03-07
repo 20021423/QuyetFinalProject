@@ -12,6 +12,22 @@
     <meta name="twitter:card" content="summary_large_image">
     <title>Checkout | Spring Shop</title>
     <link rel="stylesheet" th:href="@{/css/styles.css}">
+
+    <script>
+        function updateQuantity(productId, action) {
+            let url = `/cart/${action}/${productId}`;
+
+            fetch(url, { method: 'POST' })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error("Failed to update quantity");
+                    }
+                    return response.text();
+                })
+                .then(() => window.location.reload()) // Reload trang sau khi cập nhật
+                .catch(error => console.error("Error:", error));
+        }
+    </script>
 </head>
 <body>
 <h2>Checkout</h2>
@@ -24,6 +40,7 @@
     <table>
         <thead>
         <tr>
+            <th>Image</th>
             <th>Product</th>
             <th>Quantity</th>
             <th>Price</th>
@@ -31,8 +48,15 @@
         </thead>
         <tbody>
         <tr th:each="item : ${cartItems}">
+            <td>
+                <img th:src="@{${item.product.imageUrl}}" alt="Product Image" style="width: 80px; height: 80px;">
+            </td>
             <td th:text="${item.product.name}"></td>
-            <td th:text="${item.quantity}"></td>
+            <td>
+                <button onclick="updateQuantity([[${item.product.id}]], 'decrease')">-</button>
+                <span th:text="${item.quantity}"></span>
+                <button onclick="updateQuantity([[${item.product.id}]], 'increase')">+</button>
+            </td>
             <td th:text="${#numbers.formatDecimal(item.product.price * item.quantity, 0, 'COMMA', 3, 'POINT')} + 'đ'"></td>
         </tr>
         </tbody>
@@ -50,5 +74,6 @@
 </form>
 
 <a href="/products">Continue Shopping</a>
+
 </body>
 </html>
